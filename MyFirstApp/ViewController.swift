@@ -18,23 +18,33 @@ class ViewController: UIViewController {
     
     
     
-    
-    
-    
-    
-    
     @IBOutlet weak var CalculatorOutputLabel: UILabel!
+    var display:Double = 0
     var runningTotal:Double = 0
+    var commands:[Command] = []
     
     @IBAction func OneButtonAction(sender: UIButton) {
+        
+        
+        
+//        commands.append(sender.titleLabel?.text)
+        
+        
+        
         if let textValue = sender.titleLabel?.text {
             let value = (textValue as NSString).doubleValue
+            display = value
             runningTotal = value
-            CalculatorOutputLabel.text = "\(runningTotal)"
+            CalculatorOutputLabel.text = "\(display)"
         }
     }
     
     @IBAction func AddButtonAction(sender: AnyObject) {
+        
+    }
+
+    
+    func processStack(stack:[Command]) {
         
     }
     
@@ -53,3 +63,24 @@ class ViewController: UIViewController {
 
 }
 
+
+enum CommandType {
+    case `operator`
+    case value
+}
+
+enum OperatorType {
+    case add
+    case subtract
+    func perform(x:Double, y:Double) -> Double {
+        switch self {
+            case add: return x + y
+            case subtract: return x - y
+        }
+    }
+}
+struct Command {
+    let type: CommandType
+    let value: Double?
+    let operatorType: OperatorType?
+}
